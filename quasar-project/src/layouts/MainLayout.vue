@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar>
+      <q-toolbar class="bg-black text-white">
         <q-btn
           flat
           dense
@@ -11,15 +11,18 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> TO DO LIST </q-toolbar-title>
+        <q-toolbar-title> <strong>TO DO LIST</strong> </q-toolbar-title>
 
-        <div>Heron G. Slovinski</div>
+        <img src="https://www.softpar.inf.br/_nuxt/img/logo.303aa2f.png"  alt="" srcset="" style="width: 240px; height: 70px; display: flex; flex;">
+
+
       </q-toolbar>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> Menu </q-item-label>
+        <q-item-label header> Menu
+        </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -68,3 +71,4 @@ export default defineComponent({
   },
 });
 </script>
+

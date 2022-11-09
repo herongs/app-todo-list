@@ -36,13 +36,12 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $request->all();
-        error_log($request);
         $newItem = new item;
-        $newItem["name"] = $request["name"];
+        $newItem->completed = false;
+        $newItem->name = $request->items["name"];
         $newItem->save();
-        return $newItem;
 
+        return response()->json($newItem);
     }
 
     /**
@@ -79,8 +78,8 @@ class ItemController extends Controller
         $existingItem = item::find( $id );
 
         if( $existingItem){
-            $existingItem['completed'] = $request['completed'] ? true : false;
-            $existingItem['completed_at'] = $request['completed'] ? Carbon::now() : false;
+            $existingItem->completed = $request->items['completed'] ? true : false;
+            $existingItem->completed_at = $request->items['completed'] ? Carbon::now() : false;
             $existingItem->save();
             return $existingItem;
         }

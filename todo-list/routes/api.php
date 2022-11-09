@@ -25,8 +25,6 @@ Route::prefix('/item')->group(function(){
     Route::delete('/{id}', [ItemController::class, 'destroy']);
 });
 
-/*Route::get('/items', function(){
-    return response()->json(['status => true]);
-});*/
+
 
 
