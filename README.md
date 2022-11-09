@@ -1,5 +1,7 @@
 <h1 align="center"> To Do List Application </h1>
 
+To Do List using Laravel, MySQL, Vue and Quasar.
+
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=%20DEVELOPMENT&color=RED&style=for-the-badge)
 
 ## Descrição do Projeto
@@ -21,7 +23,8 @@ Aplicação To Do List desenvolvida como teste técnico e complementar ao proces
 - ![](images/itens-completos.PNG) 
 
  ### 🖥️ Requisitos
-
+ 
+* XAMPP <br>
 * MySQL <br>
 * PHP <br>
 * Laravel <br>
@@ -33,6 +36,14 @@ Aplicação To Do List desenvolvida como teste técnico e complementar ao proces
 * Na pasta desejada, e executar o comando:
 ```git
 git clone https://github.com/herongs/app-todo-list.git
+```
+* Execute o aplicativo XAMPP:
+```
+Start MySQL
+```
+* Na pasta todo-list, execute no cmd:
+```
+php artisan migrate
 ```
 * Na pasta todo-list, execute no cmd:
 ```
