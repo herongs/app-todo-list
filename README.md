@@ -1,6 +1,6 @@
 <h1 align="center"> To Do List Application </h1>
 
-### 🖥️ Requisitos
+<p align="center">### 🖥️ Requisitos
 
 * MySQL <br>
 * PHP <br>
@@ -8,7 +8,7 @@
 * Vue <br>
 * Quasar <br>
 
-![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=%20DEVELOPMENT&color=RED&style=for-the-badge)
+![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=%20DEVELOPMENT&color=RED&style=for-the-badge)</p>
 
 ## Descrição do Projeto
 
