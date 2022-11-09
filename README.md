@@ -1,6 +1,12 @@
 <h1 align="center"> To Do List Application </h1>
 
-To Do List using Laravel, MySQL, Vue and Quasar.
+### 🖥️ Requisitos
+
+* MySQL <br>
+* PHP <br>
+* Laravel <br>
+* Vue <br>
+* Quasar <br>
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=%20DEVELOPMENT&color=RED&style=for-the-badge)
 
@@ -21,14 +27,6 @@ Aplicação To Do List desenvolvida como teste técnico e complementar ao proces
 
 - `Marque Itens Concluídos`: Selecione os itens que já foram concluidos para poder realizar os próximos
 - ![](images/itens-completos.PNG) 
-
-### 🖥️ Requisitos
-
-* MySQL <br>
-* PHP <br>
-* Laravel <br>
-* Vue <br>
-* Quasar <br>
 
 ### 📁 Acesso ao projeto
 
