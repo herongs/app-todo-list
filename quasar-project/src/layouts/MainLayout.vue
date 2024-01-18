@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header>
       <q-toolbar class="bg-black text-white">
         <q-btn
           flat
@@ -12,17 +12,12 @@
         />
 
         <q-toolbar-title> <strong>TO DO LIST</strong> </q-toolbar-title>
-
-        <img src="https://www.softpar.inf.br/_nuxt/img/logo.303aa2f.png"  alt="" srcset="" style="width: 240px; height: 70px; display: flex; flex;">
-
-
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+    <q-drawer v-model="leftDrawerOpen" bordered>
       <q-list>
-        <q-item-label header> Menu
-        </q-item-label>
+        <q-item-label header> Menu </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -35,6 +30,14 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer class="bg-black text-white">
+      <q-toolbar class="flex">
+        <q-toolbar-title class="flex justify-center">
+          <div class="text-body2 text-center">Feito por Heron G. Slovinski</div>
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 
@@ -44,7 +47,7 @@ import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
-    title: "Home",
+    title: "Início",
     caption: "",
     icon: "home",
     route: { name: "home" },
@@ -71,4 +74,3 @@ export default defineComponent({
   },
 });
 </script>
-

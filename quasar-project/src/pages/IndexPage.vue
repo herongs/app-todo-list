@@ -1,48 +1,76 @@
 <template>
-  <q-page class="">
-    <q-input filled v-model="newItem" label="Nova Tarefa">
-      <template v-slot:append>
-        <q-btn icon="add" @click="addItem(items)" />
-      </template>
-    </q-input>
+  <q-page padding class="flex justify-center">
+    <q-card class="card bg-grey-3 q-pa-md">
+      <div class="text-h5 justify-center flex q-py-md">TAREFAS</div>
 
-    <div v-if="items.length > 0">
-      <div
-        class="row justify-center"
-        v-for="item in items"
-        :key="item.name"
-        @click="items.completed = !items.completed"
-        :class="{ 'completed': items.completed }"
-        v-ripple
-      >
-        <q-item-section avatar class="q-gutter-sm">
-          <q-checkbox
-            color="red"
-            @click="updateItem(items)"
-            v-model="items.completed"
-          />
-        </q-item-section>
-        <q-item-section class="col-8 q-py-lg">
-          <q-item-label>{{ item.name }}</q-item-label>
-        </q-item-section>
-        <q-item-section class="col-auto q-py-md" side>
-          <q-btn
-            round
-            flat
-            icon="delete"
-            color="red"
-            @click.stop="removeItem(items)"
-          />
-        </q-item-section>
-      </div>
-    </div>
-    <div v-else>
-      <div class="row  q-p-xl ">
-        <div class="col-4 q-pr-xl q-pt-xl">
-          <div class="text-h5 q-pl-xl">ADICIONE ITENS</div>
+      <div class="q-pt-md row">
+        <q-input
+          dense
+          outlined
+          v-model="newItem"
+          label="Nova Tarefa"
+          class="col-10"
+        />
+
+        <div class="col-2">
+          <q-btn @click="addItem(items)" color="green" class="q-ml-md">
+            Adicionar
+          </q-btn>
         </div>
       </div>
-    </div>
+
+      <div v-if="items.length > 0">
+        <div
+          class="row"
+          v-for="item in items"
+          :key="item.name"
+          @click="items.completed = !items.completed"
+        >
+          <q-item-section avatar class="col-1">
+            <q-checkbox
+              color="red"
+              @click="updateItem(item)"
+              v-model="item.completed"
+            />
+          </q-item-section>
+          <q-item-section class="col-9 q-py-lg">
+            <q-item-label
+              v-if="item.edit == false"
+              :class="{ completed: item.completed }"
+              class="text-body1"
+              >{{ item.name }}</q-item-label
+            >
+
+            <q-input v-model="item.name" dense v-if="item.edit == true">
+            </q-input>
+          </q-item-section>
+          <q-item-section class="col-2" side>
+            <div class="flex items-center">
+              <q-icon
+                v-if="item.edit == false"
+                name="edit"
+                size="sm"
+                class="q-pr-md"
+                color="blue"
+                @click="(item.edit = !item.edit), (editModel = item.name)"
+              ></q-icon>
+              <q-icon
+                v-if="item.edit == true"
+                name="check"
+                size="sm"
+                class="q-pr-md"
+                color="green"
+                @click="(item.edit = !item.edit), updateModel(item)"
+              />
+
+              <q-btn @click.stop="removeItem(item)" color="red" class="q-mr-sm">
+                <q-icon name="delete"></q-icon>
+              </q-btn>
+            </div>
+          </q-item-section>
+        </div>
+      </div>
+    </q-card>
   </q-page>
 </template>
 
@@ -55,27 +83,30 @@ export default defineComponent({
     return {
       newItem: "",
       items: [],
+      edit: false,
     };
   },
   mounted() {
     this.getItem();
   },
   methods: {
-    removeItem(items) {
-      const index = this.items.indexOf(items);
-      this.items.splice(index, 1);
-      fetch("http://localhost:8000/api/item/" + items.id, {
+    async removeItem(item) {
+      await fetch("http://localhost:8000/api/item/" + item.id, {
         method: "DELETE",
         credentials: "same-origin",
-        header: {
+        headers: {
           "Content-Type": "application/json",
         },
-      }).catch((error) => {
-        console.log(error);
-      });
+      })
+        .then(() => {
+          this.getItem();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    async updateItem(items) {
-      await fetch("http://localhost:8000/api/item/" + items.id, {
+    async updateItem(item) {
+      await fetch("http://localhost:8000/api/item/" + item.id, {
         method: "PUT",
         credentials: "same-origin",
       })
@@ -86,17 +117,37 @@ export default defineComponent({
           console.log(error);
         });
     },
+
+    async updateModel(item) {
+      const edit = {
+        name: item.name,
+      };
+
+      await fetch("http://localhost:8000/api/item/" + item.id, {
+        method: "PUT",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(edit),
+      })
+        .then(() => {
+          this.getItem();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     async addItem() {
       const add = {
-        items: {
-          name: this.newItem,
-        },
+        name: this.newItem,
       };
-      console.log("xxx", this.newItem);
-      await fetch("http://localhost:8000/api/item/store", {
+
+      await fetch("http://localhost:8000/api/item", {
         method: "POST",
         credentials: "same-origin",
-        header: {
+        headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(add),
@@ -110,13 +161,12 @@ export default defineComponent({
       this.newItem = "";
       this.getItem();
     },
-    getItem() {
-      fetch("http://localhost:8000/api/items")
+    async getItem() {
+      await fetch("http://localhost:8000/api/items")
         .then((response) => {
           return response.json();
         })
         .then((data) => {
-          console.log(data);
           this.items = data;
           for (let i = 0; i < this.items.length; i++) {
             if (this.items[i].completed == 0) {
@@ -124,6 +174,7 @@ export default defineComponent({
             } else {
               this.items[i].completed = true;
             }
+            this.items[i].edit = false;
           }
         });
     },
@@ -131,9 +182,13 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .completed {
   text-decoration: line-through;
   color: red;
+}
+
+.card {
+  width: 800px !important;
 }
 </style>
