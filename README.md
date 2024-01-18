@@ -2,7 +2,7 @@
 
 To Do List using Laravel, MySQL, Vue and Quasar.
 
-![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=%20DEVELOPMENT&color=RED&style=for-the-badge)
+![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=%20FINISHED&color=RED&style=for-the-badge)
 
 ## Descrição do Projeto
 
