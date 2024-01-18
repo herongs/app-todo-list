@@ -14,7 +14,7 @@ Aplicação To Do List desenvolvida como teste técnico e complementar ao proces
  ![](images/pagina-inicial-novo.png) 
 
 - `Adicione novos Itens`: Adicione novas tarefas para serem realizadas através do input Novas Tarefas.
-![](images/input-novos-itens-novo.png)
+![](images/inputs-novos-itens-novo.png)
 
 - `Edit os itens`: Edit os itens criados, atualizando o campo de nome.
 ![](images/input-edit-itens-novo.png) 
