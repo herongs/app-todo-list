@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use Illuminate\Support\Carbon;
+
 class ItemController extends Controller
 {
 
@@ -15,7 +16,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return item::orderBy('created_at', 'DESC')->get();
+        return Item::orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -36,9 +37,10 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $newItem = new item;
+
+        $newItem = new Item;
         $newItem->completed = false;
-        $newItem->name = $request->items["name"];
+        $newItem->name = $request->name;
         $newItem->save();
 
         return response()->json($newItem);
@@ -75,11 +77,15 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $existingItem = item::find( $id );
+        $existingItem = Item::find($id);
 
-        if( $existingItem){
-            $existingItem->completed = $request->items['completed'] ? true : false;
-            $existingItem->completed_at = $request->items['completed'] ? Carbon::now() : false;
+        if ($existingItem && !$request->has('name')) {
+            $existingItem->completed = !$existingItem->completed;
+            $existingItem->completed_at = Carbon::now();
+            $existingItem->save();
+            return $existingItem;
+        } else if ($existingItem && $request->has('name')) {
+            $existingItem->name = $request->name;
             $existingItem->save();
             return $existingItem;
         }
@@ -95,14 +101,13 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        $existingItem = item::find( $id );
+        $existingItem = Item::find($id);
 
-        if( $existingItem ) {
+        if ($existingItem) {
             $existingItem->delete();
             return "Item deletado com sucesso";
         }
 
         return "Item não encontrado";
-
     }
 }
